@@ -308,3 +308,79 @@ body:not(.locked) .bear-walker {
   45% { opacity: .95; transform: translate(24px, -22px) rotate(120deg) scale(1.05); }
   72%, 100% { opacity: 0; transform: translate(58px, 24px) rotate(260deg) scale(.62); }
 }
+
+/* غلاف الظرف: شاشة افتتاحية فاخرة وليست ظرفًا فقط */
+#gate {
+  gap: 20px;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 50% 22%, rgba(227,205,143,.28), transparent 28%),
+    radial-gradient(circle at 8% 82%, rgba(205,146,156,.14), transparent 24%),
+    var(--bg);
+}
+#gate::before,
+#gate::after {
+  content: "✿  ❀  ✾";
+  position: absolute;
+  color: rgba(184,149,74,.19);
+  font-size: clamp(2.2rem, 10vw, 5rem);
+  letter-spacing: .35em;
+  pointer-events: none;
+  animation: gate-drift 8s ease-in-out infinite alternate;
+}
+#gate::before { top: 8%; right: -1%; transform: rotate(13deg); }
+#gate::after { bottom: 8%; left: -3%; transform: rotate(-14deg); animation-delay: -3s; }
+.gate-copy {
+  position: relative;
+  z-index: 6;
+  text-align: center;
+  animation: gate-copy-in .9s cubic-bezier(.2,.8,.2,1) both;
+}
+.gate-kicker {
+  display: block;
+  color: var(--soft);
+  font-size: .95rem;
+  letter-spacing: .16em;
+}
+.gate-ornament {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin: 4px 0 2px;
+  color: var(--gold);
+}
+.gate-ornament i { width: 44px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold)); }
+.gate-ornament i:last-child { transform: rotate(180deg); }
+.gate-ornament b { font-size: 1.15rem; font-weight: 400; }
+.gate-copy h1 {
+  margin: 0;
+  color: var(--gold);
+  font-family: "Aref Ruqaa", Amiri, serif;
+  font-size: clamp(3.5rem, 16vw, 6.4rem);
+  font-weight: 400;
+  line-height: 1.05;
+  text-shadow: 0 7px 18px rgba(184,149,74,.16);
+}
+.gate-copy h1 small { color: var(--ink); font-size: .42em; }
+.gate-copy p { margin: 7px 0 5px; color: var(--soft); font-size: 1.02rem; }
+.gate-date {
+  display: inline-block;
+  padding: 3px 15px;
+  border: 1px solid rgba(184,149,74,.42);
+  border-radius: 999px;
+  color: var(--gold);
+  background: rgba(255,255,255,.40);
+  font-size: .78rem;
+}
+#gate .env { z-index: 6; margin-top: 2px; box-shadow: 0 18px 50px rgba(86,63,29,.10); }
+#gate .tap { position: relative; z-index: 6; font-size: .98rem; }
+#gate .tap span { color: var(--gold); font-size: .8em; margin: 0 4px; }
+@keyframes gate-copy-in { from { opacity: 0; transform: translateY(-18px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes gate-drift { to { opacity: .55; transform: translate(10px, -8px) rotate(5deg); } }
+@media (max-height: 700px) {
+  #gate { gap: 9px; }
+  .gate-copy h1 { font-size: clamp(2.8rem, 12vw, 4.4rem); }
+  .gate-copy p { margin: 2px 0; font-size: .9rem; }
+  #gate .env { width: min(74vw, 300px); }
+}
