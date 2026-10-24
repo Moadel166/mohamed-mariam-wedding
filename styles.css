@@ -84,3 +84,8 @@ footer{text-align:center;padding:30px 24px 60px;color:var(--soft)}
 #gate.open .petal-rain span:nth-child(3n) { animation-delay: .24s; }
 @keyframes petal-fall { 0% { opacity: 0; transform: translateY(-8vh) rotate(0); } 18% { opacity: .9; } 100% { opacity: 0; transform: translate(32px, 115vh) rotate(260deg); } }
 .music-frame { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+.sparkle-burst { position: fixed; inset: 0; z-index: 56; pointer-events: none; overflow: hidden; }
+.sparkle-burst i { position: absolute; left: 50%; top: 50%; width: 7px; height: 7px; border-radius: 50%; background: var(--gold); box-shadow: 0 0 12px var(--gold2); opacity: 0; transform: translate(-50%, -50%) scale(.2); }
+.sparkle-burst i::after { content: "✦"; position: absolute; left: 50%; top: 50%; color: var(--gold); font-size: 1.1rem; transform: translate(-50%, -50%); }
+.sparkle-burst.active i { animation: sparkle-pop 1.15s cubic-bezier(.2,.7,.2,1) forwards; }
+@keyframes sparkle-pop { 0% { opacity: 0; transform: translate(-50%, -50%) scale(.2) rotate(0deg); } 18% { opacity: 1; } 100% { opacity: 0; transform: translate(calc(-50% + var(--x)), calc(-50% + var(--y))) scale(1) rotate(var(--r)); } }
