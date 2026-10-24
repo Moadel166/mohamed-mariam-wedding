@@ -8,7 +8,7 @@
     <title>محمد ومريم — دعوة الزفاف</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Aref+Ruqaa:wght@400;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="/styles.css" />
   </head>
   <body>
@@ -31,13 +31,13 @@
             <p class="eyebrow">بسم الله نبدأ أجمل حكاية</p>
             <h1 id="envelopeTitle">محمد <small>&amp;</small> مريم</h1>
             <p class="envelope-subtitle">اضغطوا لفتح دعوتنا</p>
-            <button class="open-button" id="openInvitation" type="button">
+            <button class="open-button" id="openInvitation" type="button" aria-label="افتح الدعوة">
               <span>افتحوا الظرف</span>
               <span class="button-arrow">←</span>
             </button>
           </div>
         </div>
-        <p class="hint">لحظة صغيرة... وفرحتنا تكبر بوجودكم</p>
+        <p class="hint">اضغطوا لفتح الدعوة</p>
       </section>
 
       <main class="invitation" id="invitation" aria-hidden="true">
@@ -49,6 +49,12 @@
             <h2>محمد <span>&amp;</span> مريم</h2>
             <p class="hero-quote">بالحب بدأنا، وبوجودكم تكتمل الفرحة</p>
             <div class="date-pill"><span>الجمعة</span><strong>6</strong><span>نوفمبر<br />2026</span></div>
+            <div class="countdown hero-countdown" aria-label="العد التنازلي للفرح">
+              <div class="count-box"><strong data-unit="days">--</strong><span>يوم</span></div>
+              <div class="count-box"><strong data-unit="hours">--</strong><span>ساعة</span></div>
+              <div class="count-box"><strong data-unit="minutes">--</strong><span>دقيقة</span></div>
+              <div class="count-box"><strong data-unit="seconds">--</strong><span>ثانية</span></div>
+            </div>
             <div class="scroll-cue" aria-hidden="true"><span>اكتشفوا التفاصيل</span><i>⌄</i></div>
           </div>
         </header>

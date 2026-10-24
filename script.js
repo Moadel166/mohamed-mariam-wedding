@@ -4,18 +4,21 @@ const openInvitation = document.getElementById('openInvitation');
 const musicToggle = document.getElementById('musicToggle');
 const musicFrame = document.getElementById('musicFrame');
 const musicHint = document.getElementById('musicHint');
+const musicSection = document.querySelector('.music-section');
 const targetDate = new Date('2026-11-06T20:00:00+02:00').getTime();
 let musicStarted = false;
 
 function startMusic() {
   musicFrame.src = 'https://www.youtube.com/embed/Rzh2m0_e0xU?autoplay=1&loop=1&playlist=Rzh2m0_e0xU&controls=0&modestbranding=1&rel=0';
   musicStarted = true;
+  musicSection.classList.add('is-ready');
   musicToggle.querySelector('span').textContent = 'الأغنية تعمل';
   musicToggle.querySelector('b').textContent = '♪';
   musicHint.textContent = 'لو لم تسمعوا الصوت، اضغطوا على زر «الأغنية تعمل» مرة أخرى أو افتحوا الرابط من يوتيوب.';
 }
 
-openInvitation.addEventListener('click', () => {
+function openGate() {
+  if (envelopeScreen.classList.contains('is-closing')) return;
   startMusic();
   envelopeScreen.classList.add('is-closing');
   window.setTimeout(() => {
@@ -24,7 +27,10 @@ openInvitation.addEventListener('click', () => {
     invitation.setAttribute('aria-hidden', 'false');
     window.scrollTo({ top: 0, behavior: 'instant' });
   }, 580);
-});
+}
+
+openInvitation.addEventListener('click', openGate);
+envelopeScreen.addEventListener('click', openGate);
 
 musicToggle.addEventListener('click', () => {
   if (!musicStarted) startMusic();
@@ -40,8 +46,9 @@ function updateCountdown() {
     seconds: Math.floor((distance / 1000) % 60),
   } : { days: 0, hours: 0, minutes: 0, seconds: 0 };
   Object.entries(values).forEach(([unit, value]) => {
-    const node = document.querySelector(`[data-unit="${unit}"]`);
-    if (node) node.textContent = String(value).padStart(2, '0');
+    document.querySelectorAll(`[data-unit="${unit}"]`).forEach((node) => {
+      node.textContent = String(value).padStart(2, '0');
+    });
   });
 }
 updateCountdown();
