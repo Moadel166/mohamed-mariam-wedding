@@ -1,84 +1,85 @@
-const envelopeScreen = document.getElementById('envelopeScreen');
-const invitation = document.getElementById('invitation');
-const openInvitation = document.getElementById('openInvitation');
-const musicToggle = document.getElementById('musicToggle');
-const musicFrame = document.getElementById('musicFrame');
-const musicHint = document.getElementById('musicHint');
-const musicSection = document.querySelector('.music-section');
-const shareButton = document.getElementById('shareButton');
-const targetDate = new Date('2026-11-06T20:00:00+02:00').getTime();
-let musicStarted = false;
+(() => {
+  const gate = document.getElementById('gate');
+  const musicFrame = document.getElementById('musicFrame');
+  const musicButton = document.getElementById('mus');
+  const shareButton = document.getElementById('shareButton');
+  const target = new Date('2026-11-06T20:00:00+02:00').getTime();
+  let musicOn = false;
 
-function startMusic() {
-  musicFrame.src = 'https://www.youtube.com/embed/Rzh2m0_e0xU?autoplay=1&loop=1&playlist=Rzh2m0_e0xU&controls=0&modestbranding=1&rel=0';
-  musicStarted = true;
-  musicSection.classList.add('is-ready');
-  musicToggle.querySelector('span').textContent = 'الأغنية تعمل';
-  musicToggle.querySelector('b').textContent = '♪';
-  musicHint.textContent = 'لو لم تسمعوا الصوت، اضغطوا على زر «الأغنية تعمل» مرة أخرى أو افتحوا الرابط من يوتيوب.';
-}
-
-function openGate() {
-  if (envelopeScreen.classList.contains('is-closing')) return;
-  startMusic();
-  envelopeScreen.classList.add('is-closing');
-  window.setTimeout(() => {
-    envelopeScreen.style.display = 'none';
-    invitation.classList.add('is-visible');
-    invitation.setAttribute('aria-hidden', 'false');
-    window.scrollTo({ top: 0, behavior: 'instant' });
-  }, 1100);
-}
-
-openInvitation.addEventListener('click', openGate);
-envelopeScreen.addEventListener('click', openGate);
-
-musicToggle.addEventListener('click', () => {
-  if (!musicStarted) startMusic();
-  else window.open('https://youtu.be/Rzh2m0_e0xU?si=pT6gjPsCwJlvlo0Q', '_blank', 'noopener,noreferrer');
-});
-
-shareButton.addEventListener('click', () => {
-  const shareUrl = window.location.href;
-  const fallbackCopy = () => {
-    const helper = document.createElement('textarea');
-    helper.value = shareUrl;
-    helper.setAttribute('readonly', '');
-    helper.style.position = 'fixed';
-    helper.style.opacity = '0';
-    document.body.appendChild(helper);
-    helper.select();
-    document.execCommand('copy');
-    helper.remove();
-  };
-  if (navigator.clipboard && window.isSecureContext) {
-    navigator.clipboard.writeText(shareUrl).catch(fallbackCopy);
-  } else {
-    fallbackCopy();
+  function setMusicState(value) {
+    musicOn = value;
+    musicButton.style.opacity = value ? '1' : '.55';
+    musicButton.textContent = value ? '♪' : '×';
   }
-  const label = shareButton.querySelector('span');
-  const icon = shareButton.querySelector('b');
-  label.textContent = 'تم نسخ الرابط';
-  icon.textContent = '✓';
-  window.setTimeout(() => {
-    label.textContent = 'شارك فرحتنا';
-    icon.textContent = '⌯';
-  }, 2200);
-});
 
-function updateCountdown() {
-  const distance = targetDate - Date.now();
-  const values = distance > 0 ? {
-    days: Math.floor(distance / 86400000),
-    hours: Math.floor((distance / 3600000) % 24),
-    minutes: Math.floor((distance / 60000) % 60),
-    seconds: Math.floor((distance / 1000) % 60),
-  } : { days: 0, hours: 0, minutes: 0, seconds: 0 };
-  Object.entries(values).forEach(([unit, value]) => {
-    document.querySelectorAll(`[data-unit="${unit}"]`).forEach((node) => {
-      node.textContent = String(value).padStart(2, '0');
-    });
+  function playMusic() {
+    musicFrame.src = 'https://www.youtube.com/embed/Rzh2m0_e0xU?autoplay=1&loop=1&playlist=Rzh2m0_e0xU&controls=0&modestbranding=1&rel=0';
+    musicButton.classList.add('show');
+    setMusicState(true);
+  }
+
+  function openGate() {
+    if (gate.classList.contains('open')) return;
+    gate.classList.add('open');
+    playMusic();
+    window.setTimeout(() => document.body.classList.remove('locked'), 1500);
+  }
+
+  gate.addEventListener('click', openGate);
+  gate.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      openGate();
+    }
   });
-}
-updateCountdown();
-window.setInterval(updateCountdown, 1000);
+
+  musicButton.addEventListener('click', () => {
+    if (musicOn) {
+      musicFrame.src = 'about:blank';
+      setMusicState(false);
+    } else {
+      playMusic();
+    }
+  });
+
+  shareButton.addEventListener('click', () => {
+    const url = window.location.href;
+    const fallbackCopy = () => {
+      const helper = document.createElement('textarea');
+      helper.value = url;
+      helper.style.position = 'fixed';
+      helper.style.opacity = '0';
+      document.body.appendChild(helper);
+      helper.select();
+      document.execCommand('copy');
+      helper.remove();
+    };
+    if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(url).catch(fallbackCopy);
+    else fallbackCopy();
+    shareButton.textContent = 'تم نسخ الرابط';
+    window.setTimeout(() => { shareButton.textContent = 'شارك فرحتنا'; }, 2200);
+  });
+
+  function arabicNumber(number) { return number.toLocaleString('ar-EG'); }
+  function tick() {
+    const remaining = Math.max(0, target - Date.now());
+    const values = [
+      Math.floor(remaining / 86400000),
+      Math.floor(remaining / 3600000) % 24,
+      Math.floor(remaining / 60000) % 60,
+      Math.floor(remaining / 1000) % 60,
+    ];
+    ['d', 'h', 'm', 's'].forEach((id, index) => {
+      document.getElementById(id).textContent = arabicNumber(values[index]);
+    });
+  }
+  tick();
+  window.setInterval(tick, 1000);
+
+  const track = document.getElementById('track');
+  Array.from(track.children).forEach((image) => {
+    const clone = image.cloneNode(true);
+    clone.setAttribute('aria-hidden', 'true');
+    track.appendChild(clone);
+  });
+})();
