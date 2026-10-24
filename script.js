@@ -2,7 +2,8 @@
   const gate = document.getElementById('gate');
   const musicAudio = document.getElementById('musicAudio');
   const shareButton = document.getElementById('shareButton');
-  const target = new Date('2026-11-06T20:00:00+02:00').getTime();
+  // الجمعة 6 نوفمبر 2026، الساعة 20:00 بتوقيت القاهرة (+02:00 في نوفمبر) = 18:00 UTC.
+  const target = Date.UTC(2026, 10, 6, 18, 0, 0);
   musicAudio.load();
 
   function burstSparkles() {
