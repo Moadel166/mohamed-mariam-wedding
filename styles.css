@@ -282,3 +282,29 @@ body:not(.locked) .bear-walker {
   body:not(.locked) .bear-walker { animation: none; left: 50%; transform: translateX(-50%); }
   .bear-walker .bear { animation: none; }
 }
+
+/* تكبير الدبدوب وإظهار الوردة في يده أثناء الرمي */
+.bear-walker { top: 53%; }
+.bear-walker .bear {
+  position: relative;
+  font-size: 4.35rem;
+  transform-origin: 50% 80%;
+}
+.bear-flower {
+  position: absolute;
+  right: -1px;
+  top: 34px;
+  z-index: -1;
+  display: block;
+  color: #c58b9b;
+  font-size: 1.35rem;
+  font-style: normal;
+  filter: drop-shadow(0 2px 3px rgba(86,63,29,.18));
+  transform-origin: 0 80%;
+  animation: bear-throw 2.2s ease-in-out infinite;
+}
+@keyframes bear-throw {
+  0%, 18% { opacity: 1; transform: translate(0, 0) rotate(0deg) scale(1); }
+  45% { opacity: .95; transform: translate(24px, -22px) rotate(120deg) scale(1.05); }
+  72%, 100% { opacity: 0; transform: translate(58px, 24px) rotate(260deg) scale(.62); }
+}

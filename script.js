@@ -36,8 +36,8 @@
       const flower = document.createElement('span');
       flower.className = 'thrown-flower';
       flower.textContent = flowers[Math.floor(Math.random() * flowers.length)];
-      flower.style.left = `${box.left + box.width * .55}px`;
-      flower.style.top = `${box.top + box.height * .38}px`;
+      flower.style.left = `${box.left + box.width * .68}px`;
+      flower.style.top = `${box.top + box.height * .34}px`;
       flower.style.setProperty('--flower-x', `${-50 + Math.random() * 140}px`);
       flower.style.setProperty('--flower-y', `${60 + Math.random() * 170}px`);
       flower.style.setProperty('--flower-r', `${Math.round(Math.random() * 360)}deg`);
