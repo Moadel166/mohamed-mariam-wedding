@@ -89,3 +89,50 @@ footer{text-align:center;padding:30px 24px 60px;color:var(--soft)}
 .sparkle-burst i::after { content: "✦"; position: absolute; left: 50%; top: 50%; color: var(--gold); font-size: 1.1rem; transform: translate(-50%, -50%); }
 .sparkle-burst.active i { animation: sparkle-pop 1.15s cubic-bezier(.2,.7,.2,1) forwards; }
 @keyframes sparkle-pop { 0% { opacity: 0; transform: translate(-50%, -50%) scale(.2) rotate(0deg); } 18% { opacity: 1; } 100% { opacity: 0; transform: translate(calc(-50% + var(--x)), calc(-50% + var(--y))) scale(1) rotate(var(--r)); } }
+
+/* مؤثرات رومانسية خلفية هادئة لا تحجب النصوص أو الصور */
+.ambient-effects {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 1.2s ease;
+  background:
+    radial-gradient(circle at 12% 24%, rgba(227, 205, 143, .12), transparent 22%),
+    radial-gradient(circle at 88% 72%, rgba(205, 146, 156, .10), transparent 24%);
+}
+body:not(.locked) .ambient-effects { opacity: 1; }
+.ambient-effects span {
+  position: absolute;
+  top: -12vh;
+  color: rgba(184, 149, 74, .24);
+  font-size: clamp(1rem, 3vw, 1.8rem);
+  filter: blur(.1px);
+  animation: ambient-fall 14s linear infinite;
+  text-shadow: 0 0 12px rgba(227, 205, 143, .22);
+}
+.ambient-effects span:nth-child(1) { left: 7%; animation-duration: 15s; animation-delay: .5s; }
+.ambient-effects span:nth-child(2) { left: 18%; font-size: 1.1rem; animation-duration: 18s; animation-delay: 3s; }
+.ambient-effects span:nth-child(3) { left: 31%; animation-duration: 16s; animation-delay: 7s; }
+.ambient-effects span:nth-child(4) { left: 44%; font-size: 1.2rem; animation-duration: 20s; animation-delay: 1s; }
+.ambient-effects span:nth-child(5) { left: 56%; color: rgba(205, 146, 156, .22); animation-duration: 13s; animation-delay: 4s; }
+.ambient-effects span:nth-child(6) { left: 67%; animation-duration: 17s; animation-delay: 8s; }
+.ambient-effects span:nth-child(7) { left: 78%; font-size: 1.1rem; animation-duration: 19s; animation-delay: 2s; }
+.ambient-effects span:nth-child(8) { left: 91%; animation-duration: 15s; animation-delay: 6s; }
+.ambient-effects span:nth-child(9) { left: 25%; color: rgba(205, 146, 156, .20); animation-duration: 22s; animation-delay: 11s; }
+.ambient-effects span:nth-child(10) { left: 49%; animation-duration: 18s; animation-delay: 13s; }
+.ambient-effects span:nth-child(11) { left: 73%; animation-duration: 21s; animation-delay: 10s; }
+.ambient-effects span:nth-child(12) { left: 84%; color: rgba(205, 146, 156, .20); animation-duration: 16s; animation-delay: 15s; }
+@keyframes ambient-fall {
+  0% { opacity: 0; transform: translate3d(0, -12vh, 0) rotate(0deg); }
+  12% { opacity: .72; }
+  50% { transform: translate3d(26px, 52vh, 0) rotate(150deg); }
+  88% { opacity: .42; }
+  100% { opacity: 0; transform: translate3d(-24px, 116vh, 0) rotate(300deg); }
+}
+.hero, .reel, section, footer { position: relative; z-index: 1; }
+@media (prefers-reduced-motion: reduce) {
+  .ambient-effects span { animation: none; opacity: .18; }
+}

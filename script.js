@@ -3,6 +3,7 @@
   const musicAudio = document.getElementById('musicAudio');
   const shareButton = document.getElementById('shareButton');
   const target = new Date('2026-11-06T20:00:00+02:00').getTime();
+  musicAudio.load();
 
   function burstSparkles() {
     const burst = document.querySelector('.sparkle-burst');
