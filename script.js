@@ -1,21 +1,11 @@
 (() => {
   const gate = document.getElementById('gate');
   const musicFrame = document.getElementById('musicFrame');
-  const musicButton = document.getElementById('mus');
   const shareButton = document.getElementById('shareButton');
   const target = new Date('2026-11-06T20:00:00+02:00').getTime();
-  let musicOn = false;
-
-  function setMusicState(value) {
-    musicOn = value;
-    musicButton.style.opacity = value ? '1' : '.55';
-    musicButton.textContent = value ? '♪' : '×';
-  }
 
   function playMusic() {
     musicFrame.src = 'https://www.youtube.com/embed/Rzh2m0_e0xU?autoplay=1&loop=1&playlist=Rzh2m0_e0xU&controls=0&modestbranding=1&rel=0';
-    musicButton.classList.add('show');
-    setMusicState(true);
   }
 
   function openGate() {
@@ -30,15 +20,6 @@
     if (event.key === 'Enter' || event.key === ' ') {
       event.preventDefault();
       openGate();
-    }
-  });
-
-  musicButton.addEventListener('click', () => {
-    if (musicOn) {
-      musicFrame.src = 'about:blank';
-      setMusicState(false);
-    } else {
-      playMusic();
     }
   });
 
