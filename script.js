@@ -1,6 +1,7 @@
 (() => {
   const gate = document.getElementById('gate');
   const musicFrame = document.getElementById('musicFrame');
+  const zaghrooda = document.getElementById('zaghrooda');
   const shareButton = document.getElementById('shareButton');
   const target = new Date('2026-11-06T20:00:00+02:00').getTime();
 
@@ -43,11 +44,18 @@
     musicFrame.src = 'https://www.youtube.com/embed/Rzh2m0_e0xU?autoplay=1&loop=1&playlist=Rzh2m0_e0xU&controls=0&modestbranding=1&rel=0';
   }
 
+  function playZaghrooda() {
+    zaghrooda.currentTime = 0;
+    zaghrooda.volume = 0.95;
+    zaghrooda.play().catch(() => {});
+  }
+
   function openGate() {
     if (gate.classList.contains('open')) return;
     gate.classList.add('open');
     burstSparkles();
     playOpenChime();
+    playZaghrooda();
     playMusic();
     window.setTimeout(() => document.body.classList.remove('locked'), 1500);
   }
