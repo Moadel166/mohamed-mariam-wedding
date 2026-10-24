@@ -5,6 +5,7 @@ const musicToggle = document.getElementById('musicToggle');
 const musicFrame = document.getElementById('musicFrame');
 const musicHint = document.getElementById('musicHint');
 const musicSection = document.querySelector('.music-section');
+const shareButton = document.getElementById('shareButton');
 const targetDate = new Date('2026-11-06T20:00:00+02:00').getTime();
 let musicStarted = false;
 
@@ -35,6 +36,34 @@ envelopeScreen.addEventListener('click', openGate);
 musicToggle.addEventListener('click', () => {
   if (!musicStarted) startMusic();
   else window.open('https://youtu.be/Rzh2m0_e0xU?si=pT6gjPsCwJlvlo0Q', '_blank', 'noopener,noreferrer');
+});
+
+shareButton.addEventListener('click', () => {
+  const shareUrl = window.location.href;
+  const fallbackCopy = () => {
+    const helper = document.createElement('textarea');
+    helper.value = shareUrl;
+    helper.setAttribute('readonly', '');
+    helper.style.position = 'fixed';
+    helper.style.opacity = '0';
+    document.body.appendChild(helper);
+    helper.select();
+    document.execCommand('copy');
+    helper.remove();
+  };
+  if (navigator.clipboard && window.isSecureContext) {
+    navigator.clipboard.writeText(shareUrl).catch(fallbackCopy);
+  } else {
+    fallbackCopy();
+  }
+  const label = shareButton.querySelector('span');
+  const icon = shareButton.querySelector('b');
+  label.textContent = 'تم نسخ الرابط';
+  icon.textContent = '✓';
+  window.setTimeout(() => {
+    label.textContent = 'شارك فرحتنا';
+    icon.textContent = '⌯';
+  }, 2200);
 });
 
 function updateCountdown() {

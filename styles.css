@@ -93,6 +93,8 @@ h3 em { color: var(--gold); font-style: normal; }
 .event-divider { width: 80%; height: 1px; margin: 13px auto; background: var(--gold2); }
 .map-button { display: inline-flex; align-items: center; justify-content: center; gap: 8px; margin-top: 18px; padding: 13px 30px; border-radius: 999px; background: var(--gold); color: #fff; text-decoration: none; font-weight: 700; box-shadow: none; }
 .map-button b { display: none; }
+.share-button { border: 1px solid var(--gold); background: transparent; color: var(--gold); }
+.share-button:hover { background: var(--gold); color: #fff; }
 
 .countdown-section { max-width: 640px; background: transparent; overflow: visible; }
 .countdown-leaf { display: none; }
