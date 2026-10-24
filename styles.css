@@ -1,11 +1,11 @@
 :root {
-  --bg: #fbfaf7;
-  --ink: #3b3226;
-  --soft: #7a6e5c;
+  --bg: #eeebe4;
+  --ink: #29261f;
+  --soft: #686157;
   --gold: #b8954a;
   --gold2: #e3cd8f;
-  --card: #fff;
-  --env: #f1ead9;
+  --card: #f7f3eb;
+  --env: #e3ddcf;
   --shadow: 0 14px 40px rgba(120, 95, 40, .22);
   box-sizing: border-box;
   padding-top: env(safe-area-inset-top, 0px);
@@ -22,6 +22,16 @@ h1, h2, h3 { font-family: "Aref Ruqaa", "Amiri", serif; font-weight: 400; }
 
 .site-shell { min-height: 100vh; overflow: hidden; position: relative; background: var(--bg); }
 .petal-layer { display: none; }
+.falling-petals { position: fixed; inset: 0; z-index: 70; pointer-events: none; overflow: hidden; }
+.falling-petals span { position: absolute; top: -12vh; color: var(--gold); opacity: 0; font-family: serif; font-size: 1.5rem; }
+.falling-petals span:nth-child(1) { left: 8%; }
+.falling-petals span:nth-child(2) { left: 21%; font-size: 1.1rem; }
+.falling-petals span:nth-child(3) { left: 35%; }
+.falling-petals span:nth-child(4) { left: 49%; font-size: 1.9rem; }
+.falling-petals span:nth-child(5) { left: 63%; }
+.falling-petals span:nth-child(6) { left: 76%; font-size: 1.1rem; }
+.falling-petals span:nth-child(7) { left: 88%; }
+.falling-petals span:nth-child(8) { left: 56%; font-size: 1rem; }
 
 /* نفس بوابة الظرف في المرجع: بسيطة، كريمية، وذهبية */
 .envelope-screen { position: fixed; inset: 0; z-index: 50; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 28px; padding: env(safe-area-inset-top, 0px) 20px env(safe-area-inset-bottom, 0px); background: var(--bg); cursor: pointer; transition: opacity .9s ease .9s, visibility 0s 1.8s; }
@@ -29,14 +39,19 @@ h1, h2, h3 { font-family: "Aref Ruqaa", "Amiri", serif; font-weight: 400; }
 .top-ribbon { display: none; }
 .envelope-card { position: relative; width: min(86vw, 360px); aspect-ratio: 3 / 2; min-height: 0; filter: none; perspective: 900px; animation: none; }
 .envelope-card::before { content: ""; position: absolute; inset: 0; border-radius: 6px; background: var(--env); border: 1px solid var(--gold2); box-shadow: var(--shadow); }
-.envelope-paper { position: absolute; left: 7%; right: 7%; top: 6%; inset-block-end: auto; height: 88%; padding: 20px; border: 0; border-radius: 4px; background: #fff; z-index: 2; display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--ink); box-shadow: 0 2px 8px rgba(0, 0, 0, .1); overflow: visible; }
+.envelope-paper { position: absolute; left: 7%; right: 7%; top: 6%; inset-block-end: auto; height: 88%; padding: 20px 18px 17px; border: 0; border-radius: 4px; background: var(--card); z-index: 2; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; color: var(--ink); box-shadow: 0 2px 8px rgba(0, 0, 0, .1); overflow: visible; }
 .envelope-paper::before { display: none; }
 .envelope-paper .eyebrow { display: none; }
 .envelope-paper h1 { position: static; margin: 0; color: var(--gold); font: 400 1.5rem "Aref Ruqaa", serif; line-height: 1.3; }
+.envelope-paper h1 { display: none; }
 .envelope-paper h1 small { display: block; color: var(--ink); font: .92rem "Amiri", serif; }
 .envelope-subtitle { display: none; }
 .envelope-flap { position: absolute; left: 0; right: 0; top: 0; height: 60%; z-index: 4; border-radius: 0; clip-path: polygon(0 0, 100% 0, 50% 100%); background: linear-gradient(#efe6cf, #e6d9b6); transform-origin: top; transition: transform .9s ease, z-index 0s .45s; }
 .envelope-flap::after { display: none; }
+.envelope-label { position: absolute; left: 10%; right: 10%; bottom: 12%; z-index: 8; display: flex; flex-direction: column; align-items: center; color: var(--ink); text-align: center; line-height: 1.25; pointer-events: none; }
+.envelope-label span { color: var(--soft); font-size: .62rem; }
+.envelope-label strong { color: var(--gold); font: 400 1.35rem "Aref Ruqaa", serif; }
+.envelope-label small { color: var(--soft); font-size: .7rem; }
 .wax-seal { position: absolute; left: 50%; top: 52%; z-index: 5; width: 54px; height: 54px; margin: -27px 0 0 -27px; border-radius: 50%; display: grid; place-items: center; background: radial-gradient(circle at 35% 30%, #f2dc9c, var(--gold)); color: #fff; font: 26px/1 "Amiri", serif; box-shadow: 0 3px 10px rgba(0, 0, 0, .25); transition: opacity .3s; }
 .wax-seal i { display: none; }
 .open-button { position: absolute; inset: 0; z-index: 6; width: 100%; height: 100%; padding: 0; border: 0; background: transparent; color: transparent; box-shadow: none; border-radius: 0; }
@@ -46,6 +61,15 @@ h1, h2, h3 { font-family: "Aref Ruqaa", "Amiri", serif; font-weight: 400; }
 .envelope-screen.is-closing .envelope-flap { transform: rotateX(180deg); z-index: 1; }
 .envelope-screen.is-closing .wax-seal { opacity: 0; }
 .envelope-screen.is-closing .envelope-paper { transform: translateY(-70%) scale(1.15); }
+.envelope-screen.is-closing .envelope-label { opacity: 0; transition: opacity .25s; }
+.envelope-screen.is-closing .falling-petals span { animation: petalFall 1.25s ease-in forwards; }
+.envelope-screen.is-closing .falling-petals span:nth-child(2n) { animation-delay: .12s; }
+.envelope-screen.is-closing .falling-petals span:nth-child(3n) { animation-delay: .24s; }
+@keyframes petalFall { 0% { opacity: 0; transform: translate3d(0, -8vh, 0) rotate(0deg); } 15% { opacity: .9; } 100% { opacity: 0; transform: translate3d(35px, 115vh, 0) rotate(260deg); } }
+.envelope-screen.is-closing .falling-petals span { animation: petalFall 1.25s ease-in forwards; }
+.envelope-screen.is-closing .falling-petals span:nth-child(2n) { animation-delay: .12s; }
+.envelope-screen.is-closing .falling-petals span:nth-child(3n) { animation-delay: .24s; }
+@keyframes petalFall { 0% { opacity: 0; transform: translate3d(0, -8vh, 0) rotate(0deg); } 15% { opacity: .9; } 100% { opacity: 0; transform: translate3d(35px, 115vh, 0) rotate(260deg); } }
 
 .invitation { display: block; }
 .invitation.is-visible { animation: pageIn .8s both; }
@@ -58,6 +82,7 @@ h1, h2, h3 { font-family: "Aref Ruqaa", "Amiri", serif; font-weight: 400; }
 .floral-mark { display: none; }
 .hero-content .eyebrow { margin: 0; color: var(--soft); font-size: 1rem; }
 .hero-content h2 { margin: 14px 0; color: var(--gold); font: 400 clamp(3.4rem, 17vw, 7rem)/1.25 "Aref Ruqaa", serif; }
+.hero-content h2 { display: none; }
 .hero-content h2 span { display: block; color: var(--ink); font: .4em "Amiri", serif; }
 .hero-quote { margin: 0; color: var(--soft); font-size: 1.05rem; }
 .date-pill { display: block; margin-top: 0; color: var(--soft); font-size: 1.05rem; }
@@ -97,6 +122,7 @@ h3 em { color: var(--gold); font-style: normal; }
 .share-button:hover { background: var(--gold); color: #fff; }
 
 .countdown-section { max-width: 640px; background: transparent; overflow: visible; }
+.countdown-section { display: none; }
 .countdown-leaf { display: none; }
 .countdown { display: flex; gap: 10px; justify-content: center; margin-top: 28px; direction: ltr; }
 .count-box { min-width: 66px; padding: 10px 4px; border: 1px solid var(--gold2); border-radius: 40px 40px 10px 10px; background: transparent; }
@@ -116,6 +142,7 @@ h3 em { color: var(--gold); font-style: normal; }
 .footer-flower { display: none; }
 .footer-section p { margin: 0; color: var(--soft); font-size: 1rem; }
 .footer-section h2 { margin: 0; color: var(--gold); font: 400 2.4rem "Aref Ruqaa", serif; }
+.footer-section h2 { display: none; }
 .footer-section h2 span { display: block; color: var(--ink); font: .4em "Amiri", serif; }
 .footer-section small { color: var(--soft); letter-spacing: .1em; font-size: .85rem; }
 

@@ -27,7 +27,7 @@ function openGate() {
     invitation.classList.add('is-visible');
     invitation.setAttribute('aria-hidden', 'false');
     window.scrollTo({ top: 0, behavior: 'instant' });
-  }, 580);
+  }, 1100);
 }
 
 openInvitation.addEventListener('click', openGate);
