@@ -384,3 +384,57 @@ body:not(.locked) .bear-walker {
   .gate-copy p { margin: 2px 0; font-size: .9rem; }
   #gate .env { width: min(74vw, 300px); }
 }
+
+/* دبدوب ثابت تحت الظرف يرمي بوكيهات صغيرة إلى أعلى */
+.gate-bear {
+  position: relative;
+  z-index: 6;
+  width: 150px;
+  height: 82px;
+  margin-top: -7px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+.gate-bear-body {
+  position: relative;
+  display: block;
+  font-size: 4rem;
+  line-height: 1;
+  filter: drop-shadow(0 6px 7px rgba(77,54,28,.18));
+  animation: gate-bear-sway 1.7s ease-in-out infinite alternate;
+}
+.bouquet-hand {
+  position: absolute;
+  right: -4px;
+  top: 20px;
+  z-index: -1;
+  font-size: 1.15rem;
+  font-style: normal;
+  animation: hand-bouquet 1.5s ease-in-out infinite;
+}
+.tossed-bouquet {
+  position: absolute;
+  left: 50%;
+  top: 7px;
+  z-index: -1;
+  font-size: .9rem;
+  opacity: 0;
+  transform-origin: center;
+  animation: bouquet-toss 3.3s ease-out infinite;
+}
+.bouquet-one { --tx: -64px; --ty: -116px; animation-delay: .1s; }
+.bouquet-two { --tx: 3px; --ty: -148px; animation-delay: 1.2s; }
+.bouquet-three { --tx: 66px; --ty: -104px; animation-delay: 2.25s; }
+@keyframes gate-bear-sway { to { transform: translateY(-3px) rotate(2deg); } }
+@keyframes hand-bouquet {
+  0%, 32% { transform: rotate(0deg) translate(0,0); }
+  54% { transform: rotate(-22deg) translate(5px,-3px); }
+  100% { transform: rotate(0deg) translate(0,0); }
+}
+@keyframes bouquet-toss {
+  0%, 8% { opacity: 0; transform: translate(0,0) scale(.45) rotate(0deg); }
+  18% { opacity: 1; }
+  72% { opacity: .85; }
+  100% { opacity: 0; transform: translate(var(--tx), var(--ty)) scale(.78) rotate(220deg); }
+}
