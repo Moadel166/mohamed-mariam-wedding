@@ -1,29 +1,9 @@
 (() => {
   const gate = document.getElementById('gate');
   const musicFrame = document.getElementById('musicFrame');
-  const zaghrooda = document.getElementById('zaghrooda');
+  const zaghroodaFrame = document.getElementById('zaghroodaFrame');
   const shareButton = document.getElementById('shareButton');
   const target = new Date('2026-11-06T20:00:00+02:00').getTime();
-
-  function playOpenChime() {
-    const AudioContext = window.AudioContext || window.webkitAudioContext;
-    if (!AudioContext) return;
-    const context = new AudioContext();
-    const gain = context.createGain();
-    gain.gain.setValueAtTime(0.0001, context.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.08, context.currentTime + 0.03);
-    gain.gain.exponentialRampToValueAtTime(0.0001, context.currentTime + 0.8);
-    gain.connect(context.destination);
-    [523.25, 659.25, 783.99].forEach((frequency, index) => {
-      const oscillator = context.createOscillator();
-      oscillator.type = 'sine';
-      oscillator.frequency.value = frequency;
-      oscillator.connect(gain);
-      oscillator.start(context.currentTime + index * 0.08);
-      oscillator.stop(context.currentTime + 0.85);
-    });
-    window.setTimeout(() => context.close(), 1200);
-  }
 
   function burstSparkles() {
     const burst = document.querySelector('.sparkle-burst');
@@ -45,18 +25,15 @@
   }
 
   function playZaghrooda() {
-    zaghrooda.currentTime = 0;
-    zaghrooda.volume = 0.95;
-    zaghrooda.play().catch(() => {});
+    zaghroodaFrame.src = 'https://www.youtube.com/embed/0RgwMmXkxww?autoplay=1&controls=0&modestbranding=1&rel=0';
   }
 
   function openGate() {
     if (gate.classList.contains('open')) return;
     gate.classList.add('open');
     burstSparkles();
-    playOpenChime();
     playZaghrooda();
-    playMusic();
+    window.setTimeout(playMusic, 3000);
     window.setTimeout(() => document.body.classList.remove('locked'), 1500);
   }
 
